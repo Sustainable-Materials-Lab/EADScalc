@@ -56,7 +56,7 @@ Contributors are welcome.
 Originally authored by Samuel Eyley.
 
 ## License
-CC-BY-SA 4.0
+CC-SA 4.0
 
 ## Project status
 Dormant - I no longer use this in my day to day work, so I am not actively working on it, however, I am willing to fix problems.
