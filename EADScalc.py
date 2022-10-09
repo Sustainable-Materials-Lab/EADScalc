@@ -386,9 +386,9 @@ M_tot1 = C_tot1 + H_tot1 + O_tot1 + N_tot + S_tot + Si_tot + Cl_tot + Br_tot + F
 
 Frac_mod = M_tot1 / M_tot
 
-printout = ('empirical formula: C'+str(round(C_tot,3))+" H"+str(round(H_tot,3))+' O'+str(round(O_tot,3))+' N'+str(round(N_tot,3))
-      +' S'+str(round(S_tot,3))+' F'+str(round(F_tot,3))+' Cl'+str(round(Cl_tot,3))+' Br'+str(round(Br_tot,3))+' I'+str(round(I_tot,3))
-      +' Fe'+str(round(Fe_tot,3))+' Cu'+str(round(Cu_tot,3))+' Na'+str(round(Na_tot,3))+os.linesep
+printout = ('empirical formula: C'+str(round(C_mod,3))+" H"+str(round(H_mod,3))+' O'+str(round(O_mod,3))+' N'+str(round(N_mod,3))
+      +' S'+str(round(S_mod,3))+' F'+str(round(F_mod,3))+' Cl'+str(round(Cl_mod,3))+' Br'+str(round(Br_mod,3))+' I'+str(round(I_mod,3))
+      +' Fe'+str(round(Fe_mod,3))+' Cu'+str(round(Cu_mod,3))+' Na'+str(round(Na_mod,3))+os.linesep
       +'Chain ratio: '+str(args.chain_ratio)+os.linesep
       +'Mod 1: C'+str(round(args.C1,3))+' H'+str(round(args.H1,3))+' O'+str(round(args.O1,3))+' N'+str(round(args.N1,3))+' S'+str(round(args.S1,3))+' Si'+str(round(args.Si1,3))+' F'+str(round(args.F1,3))+' Cl'+str(round(args.Cl1,3))+' Br'+str(round(args.Br1,3))+' I'+str(round(args.I1,3))+' Fe'+str(round(args.Fe1,3))+' Cu'+str(round(args.Cu1,3))+' Na'+str(round(args.Na1,3))+os.linesep
       +'Mod 2: C'+str(round(args.C2,3))+' H'+str(round(args.H2,3))+' O'+str(round(args.O2,3))+' N'+str(round(args.N2,3))+' S'+str(round(args.S2,3))+' Si'+str(round(args.Si2,3))+' F'+str(round(args.F2,3))+' Cl'+str(round(args.Cl2,3))+' Br'+str(round(args.Br2,3))+' I'+str(round(args.I2,3))+' Fe'+str(round(args.Fe2,3))+' Cu'+str(round(args.Cu2,3))+' Na'+str(round(args.Na2,3))+os.linesep
