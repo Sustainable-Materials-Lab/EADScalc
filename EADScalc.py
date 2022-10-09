@@ -386,7 +386,7 @@ M_tot1 = C_tot1 + H_tot1 + O_tot1 + N_tot + S_tot + Si_tot + Cl_tot + Br_tot + F
 
 Frac_mod = M_tot1 / M_tot
 
-printout = ('totirical formula: C'+str(round(C_tot,3))+" H"+str(round(H_tot,3))+' O'+str(round(O_tot,3))+' N'+str(round(N_tot,3))
+printout = ('empirical formula: C'+str(round(C_tot,3))+" H"+str(round(H_tot,3))+' O'+str(round(O_tot,3))+' N'+str(round(N_tot,3))
       +' S'+str(round(S_tot,3))+' F'+str(round(F_tot,3))+' Cl'+str(round(Cl_tot,3))+' Br'+str(round(Br_tot,3))+' I'+str(round(I_tot,3))
       +' Fe'+str(round(Fe_tot,3))+' Cu'+str(round(Cu_tot,3))+' Na'+str(round(Na_tot,3))+os.linesep
       +'Chain ratio: '+str(args.chain_ratio)+os.linesep
