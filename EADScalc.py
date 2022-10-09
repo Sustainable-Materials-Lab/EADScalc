@@ -9,13 +9,6 @@ Python 3 script for the calculation of cellulose elemental analysis data
 and empirical formulae.  This script requires a large number of command line
 arguments.  Help can be obtained by -h or --help.
 
-Requires lmfit!  install with pip if using anaconda on windows, otherwise use
-your favourite package manager.
-
-For windows users:
-
-python -m pip install lmfit
-
 In order to get meaningful results, remember to constrain DS prior to fitting.
 
 Example commandline:
@@ -25,7 +18,7 @@ Example commandline:
  --G1max 0.55 --G2 0.005 --G2min 0 --G2max 0.1 --G3 0.02 --G3min 0 --G3max 0.1
  
  Carbon, hydrogen, nitrogen and sulfur contents are mandatory, set to 0 if
- unknown or the script will not run!
+ unknown or the script will not run.
 
 """
 
@@ -37,7 +30,7 @@ import numpy as np
 
 parser = ap.ArgumentParser(description='EA calculator for cellulose (CHNS minimum)')
 parser.add_argument("chain_ratio", help=
-                    "Chain ratio (DSsurf). Set to 1 for DS or 6nm (0.375) 7.5nm (0.305) Elazzouzi-Hafraoui (0.237)"
+                    "Ratio of surface to total chains (DSsurf). Set to 1 for DS or 6nm (0.375) 7.5nm (0.305) Elazzouzi-Hafraoui (0.237)"
                     , type=np.float_)
 parser.add_argument("humidity", help="Sample water content in percent", type=np.float_)
 parser.add_argument("carb", help="Detected carbon percent",type=np.float_)
@@ -187,38 +180,23 @@ def residual (pars):
     Cu_mod = (DS1*args.Cu1) + (DS2*args.Cu2) + (DS3*args.Cu3)
     Na_mod =  (DS1*args.Na1) + (DS2*args.Na2) + (DS3*args.Na3)
     
-    """Define empirical formula (include chain ratio here if required
-    otherwise equal to X_mod"""
-
-    C_emp = C_mod
-    H_emp = H_mod
-    O_emp = O_mod
-    N_emp = N_mod
-    S_emp = S_mod
-    Si_emp = Si_mod
-    Cl_emp = Cl_mod
-    Br_emp = Br_mod
-    F_emp = F_mod
-    I_emp = I_mod
-    Fe_emp = Fe_mod
-    Cu_emp = Cu_mod
-    Na_emp = Na_mod
+    
     
     """Time to get massive"""
     
-    C_tot = C_emp * Cmass
-    H_tot = H_emp * Hmass
-    O_tot = O_emp * Omass
-    N_tot = N_emp * Nmass
-    S_tot = S_emp * Smass
-    Si_tot = Si_emp * Simass
-    Cl_tot = Cl_emp * Clmass
-    Br_tot = Br_emp * Brmass
-    F_tot = F_emp * Fmass
-    I_tot = I_emp * Imass
-    Fe_tot = Fe_emp * Femass
-    Cu_tot = Cu_emp * Cumass
-    Na_tot = Na_emp * Namass
+    C_tot = C_mod * Cmass
+    H_tot = H_mod * Hmass
+    O_tot = O_mod * Omass
+    N_tot = N_mod * Nmass
+    S_tot = S_mod * Smass
+    Si_tot = Si_mod * Simass
+    Cl_tot = Cl_mod * Clmass
+    Br_tot = Br_mod * Brmass
+    F_tot = F_mod * Fmass
+    I_tot = I_mod * Imass
+    Fe_tot = Fe_mod * Femass
+    Cu_tot = Cu_mod * Cumass
+    Na_tot = Na_mod * Namass
     
     M_tot = C_tot + H_tot + O_tot + N_tot + S_tot + Si_tot + Cl_tot + Br_tot + F_tot + I_tot + Fe_tot + Cu_tot + Na_tot
     
@@ -333,9 +311,7 @@ result = lmf.minimize(residual,pars,method=args.method)
 
 """Format results"""
 report = lmf.fit_report(result)
-res_dict = result.params.valuesdict()
-DS = list(res_dict.values())
-
+DS = list(result.params.valuesdict().values())
 
 H_mod = h_cel - DS[0] - DS[1] - DS[2] + (DS[0]*args.H1) + (DS[1]*args.H2) + (DS[2]*args.H3)
 O_mod = o_cel - DS[0] - DS[1] - DS[2] + (DS[0]*args.O1) + (DS[1]*args.O2) + (DS[2]*args.O3)
@@ -351,40 +327,23 @@ I_mod = (DS[0]*args.I1) + (DS[1]*args.I2) + (DS[2]*args.I3)
 
 Fe_mod = (DS[0]*args.Fe1) + (DS[1]*args.Fe2) + (DS[2]*args.Fe3)
 Cu_mod = (DS[0]*args.Cu1) + (DS[1]*args.Cu2) + (DS[2]*args.Cu3)
-Na_mod = (DS[0]*args.Na1) + (DS[1]*args.Na2) + (DS[2]*args.Na3)
-
-
-"""Define empirical formula (include chain ratio here if required
-otherwise equal to X_mod"""
-C_emp = C_mod
-H_emp = H_mod
-O_emp = O_mod
-N_emp = N_mod
-S_emp = S_mod
-Si_emp = Si_mod
-Cl_emp = Cl_mod
-Br_emp = Br_mod
-F_emp = F_mod
-I_emp = I_mod
-Fe_emp = Fe_mod
-Cu_emp = Cu_mod
-Na_emp = Na_mod    
+Na_mod = (DS[0]*args.Na1) + (DS[1]*args.Na2) + (DS[2]*args.Na3)   
 
 """Time to get massive"""
 
-C_tot = C_emp * Cmass
-H_tot = H_emp * Hmass
-O_tot = O_emp * Omass
-N_tot = N_emp * Nmass
-S_tot = S_emp * Smass
-Si_tot = Si_emp * Simass
-Cl_tot = Cl_emp * Clmass
-Br_tot = Br_emp * Brmass
-F_tot = F_emp * Fmass
-I_tot = I_emp * Imass
-Fe_tot = Fe_emp * Femass
-Cu_tot = Cu_emp * Cumass
-Na_tot = Na_emp * Namass
+C_tot = C_mod * Cmass
+H_tot = H_mod * Hmass
+O_tot = O_mod * Omass
+N_tot = N_mod * Nmass
+S_tot = S_mod * Smass
+Si_tot = Si_mod * Simass
+Cl_tot = Cl_mod * Clmass
+Br_tot = Br_mod * Brmass
+F_tot = F_mod * Fmass
+I_tot = I_mod * Imass
+Fe_tot = Fe_mod * Femass
+Cu_tot = Cu_mod * Cumass
+Na_tot = Na_mod * Namass
 
 M_tot = C_tot + H_tot + O_tot + N_tot + S_tot + Si_tot + Cl_tot + Br_tot + F_tot + I_tot + Fe_tot + Cu_tot + Na_tot
 
