@@ -24,7 +24,7 @@ For example:
 When considering the empirical formula of the modification, consider all atoms that REPLACE the hydroxyl group that you are modifying. E.g. if you create cellulose acetate, the modification would be C2H3O2.
 
 ## Support
-If there are issues, contact Samuel Eyley
+If there are issues, contact @u0092172
 
 ## Roadmap
 No updates are planned for this project and it is in a dormant state.
@@ -33,7 +33,7 @@ No updates are planned for this project and it is in a dormant state.
 Contributors are welcome.
 
 ## Authors and acknowledgment
-Originally authored by Samuel Eyley.
+Originally authored by @u0092172
 
 ## License
 CC-SA 4.0
