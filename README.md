@@ -36,12 +36,18 @@ On some READMEs, you may see small images that convey metadata, such as whether 
 Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
 
 ## Installation
-Requires lmfit. In windows, install the free anaconda python 3 distribution. Then install lmfit using pip:
+Requires lmfit and numoy. In windows, install the free anaconda python 3 distribution. Then install lmfit using pip:
 
 `python -m pip install lmfit`
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+To get help with the script, run:
+
+`python EADScalc.py -h`
+
+The minimal amount of information you need to enter to run the calculation is:
+
+`python EADScalc.py <chain_ratio> <water_content> <carbon_content> <hydrogen_content> <nitrogen_content> <sulfur_content> <result_filename_without_ext> --nmod <number_of_modificationsf_(1)> --C1 0 --O1 4 --S1 1 --H1 1 (--C2...)`
 
 ## Support
 If there are issues, contact Samuel Eyley
