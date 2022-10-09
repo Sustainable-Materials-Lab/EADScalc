@@ -386,37 +386,7 @@ M_tot1 = C_tot1 + H_tot1 + O_tot1 + N_tot + S_tot + Si_tot + Cl_tot + Br_tot + F
 
 Frac_mod = M_tot1 / M_tot
 
-with open(args.fname+'_result.txt','w') as text_file:
-    print('Empirical formula: C'+str(round(C_emp,3))+" H"+str(round(H_emp,3))+' O'+str(round(O_emp,3))+' N'+str(round(N_emp,3))
-          +' S'+str(round(S_emp,3))+' F'+str(round(F_emp,3))+' Cl'+str(round(Cl_emp,3))+' Br'+str(round(Br_emp,3))+' I'+str(round(I_emp,3))
-          +' Fe'+str(round(Fe_emp,3))+' Cu'+str(round(Cu_emp,3))+' Na'+str(round(Na_emp,3))+os.linesep
-          +'Chain ratio: '+str(args.chain_ratio)+os.linesep
-          +'Mod 1: C'+str(round(args.C1,3))+' H'+str(round(args.H1,3))+' O'+str(round(args.O1,3))+' N'+str(round(args.N1,3))+' S'+str(round(args.S1,3))+' Si'+str(round(args.Si1,3))+' F'+str(round(args.F1,3))+' Cl'+str(round(args.Cl1,3))+' Br'+str(round(args.Br1,3))+' I'+str(round(args.I1,3))+' Fe'+str(round(args.Fe1,3))+' Cu'+str(round(args.Cu1,3))+' Na'+str(round(args.Na1,3))+os.linesep
-          +'Mod 2: C'+str(round(args.C2,3))+' H'+str(round(args.H2,3))+' O'+str(round(args.O2,3))+' N'+str(round(args.N2,3))+' S'+str(round(args.S2,3))+' Si'+str(round(args.Si2,3))+' F'+str(round(args.F2,3))+' Cl'+str(round(args.Cl2,3))+' Br'+str(round(args.Br2,3))+' I'+str(round(args.I2,3))+' Fe'+str(round(args.Fe2,3))+' Cu'+str(round(args.Cu2,3))+' Na'+str(round(args.Na2,3))+os.linesep
-          +'Mod 3: C'+str(round(args.C3,3))+' H'+str(round(args.H3,3))+' O'+str(round(args.O3,3))+' N'+str(round(args.N3,3))+' S'+str(round(args.S3,3))+' Si'+str(round(args.Si3,3))+' F'+str(round(args.F3,3))+' Cl'+str(round(args.Cl3,3))+' Br'+str(round(args.Br3,3))+' I'+str(round(args.I3,3))+' Fe'+str(round(args.Fe3,3))+' Cu'+str(round(args.Cu3,3))+' Na'+str(round(args.Na3,3))+os.linesep
-          +'DS1 = '+str(round(DS[0],3))+os.linesep
-          +'DS2 = '+str(round(DS[1],3))+os.linesep
-          +'DS3 = '+str(round(DS[2],3))+os.linesep
-          +'DS1(surf) = '+str(round(DS[0]/args.chain_ratio,3))+os.linesep
-          +'DS2(surf) = '+str(round(DS[1]/args.chain_ratio,3))+os.linesep
-          +'DS3(surf) = '+str(round(DS[2]/args.chain_ratio,3))+os.linesep
-          +'Found percent water = '+str(args.humidity)+os.linesep
-          +'Found percent water (oxygen) = '+str(args.oxywater)+os.linesep
-          +'Calc percent water = '+str(DS[3]*100)+os.linesep
-          +'Mass fraction modification = '+str(round(Frac_mod,3))+os.linesep
-          +'Molecular mass modified AGU = '+str(round(M_tot,5))+os.linesep
-          +'Found: '+os.linesep
-          +'C, '+str(np.float_(100*C_det))+'; H, '+str(np.float_(100*H_det))+'; O, '+str(np.float_(100*O_det))+'; N, '+str(np.float_(100*N_det))
-          +'; S, '+str(np.float_(100*S_det))+'; Si, '+str(np.float_(100*Si_det))+'; F, '+str(np.float_(100*F_det))+'; Cl, '+str(np.float_(100*Cl_det))
-          +'; Br, '+str(np.float_(100*Br_det))+'; I, '+str(np.float_(100*I_det))+'; Fe, '+str(np.float_(100*Fe_det))+'; Cu, '+str(np.float_(100*Cu_det))+'; Na, '+str(np.float_(100*Na_det))+os.linesep
-          +'Calculated: '+os.linesep
-          +'C, '+str(round(np.float_(100*C_frac),3))+'; H, '+str(round(np.float_(100*H_frac),3))+'; O, '+str(round(np.float_(100*O_frac),3))+'; N, '+str(round(np.float_(100*N_frac),3))
-          +'; S, '+str(round(np.float_(100*S_frac),3))+'; Si, '+str(round(np.float_(100*Si_frac),3))+'; F, '+str(round(np.float_(100*F_frac),3))+'; Cl, '+str(round(np.float_(100*Cl_frac),3))
-          +'; Br, '+str(round(np.float_(100*Br_frac),3))+'; I, '+str(round(np.float_(100*I_frac),3))+'; Fe, '+str(round(np.float_(100*Fe_frac),3))+'; Cu, '+str(round(np.float_(100*Cu_frac),3))+'; Na, '+str(round(np.float_(100*Na_frac),3))
-          +os.linesep+os.linesep+'Optimization data:'+os.linesep+os.linesep+str(report)
-          +os.linesep+os.linesep+"Command line:"+os.linesep
-          +os.linesep+str(sys.argv),file=text_file)
-print('Empirical formula: C'+str(round(C_emp,3))+" H"+str(round(H_emp,3))+' O'+str(round(O_emp,3))+' N'+str(round(N_emp,3))
+printout = ('Empirical formula: C'+str(round(C_emp,3))+" H"+str(round(H_emp,3))+' O'+str(round(O_emp,3))+' N'+str(round(N_emp,3))
       +' S'+str(round(S_emp,3))+' F'+str(round(F_emp,3))+' Cl'+str(round(Cl_emp,3))+' Br'+str(round(Br_emp,3))+' I'+str(round(I_emp,3))
       +' Fe'+str(round(Fe_emp,3))+' Cu'+str(round(Cu_emp,3))+' Na'+str(round(Na_emp,3))+os.linesep
       +'Chain ratio: '+str(args.chain_ratio)+os.linesep
@@ -445,3 +415,7 @@ print('Empirical formula: C'+str(round(C_emp,3))+" H"+str(round(H_emp,3))+' O'+s
       +os.linesep+os.linesep+'Optimization data:'+os.linesep+os.linesep+str(report)
       +os.linesep+os.linesep+"Command line:"+os.linesep
       +os.linesep+str(sys.argv))
+
+with open(args.fname+'_result.txt','w') as text_file:
+    print(printout,file=text_file)
+print(printout)
