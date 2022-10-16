@@ -23,6 +23,9 @@ For example:
 
 When considering the empirical formula of the modification, consider all atoms that REPLACE the hydroxyl group that you are modifying. E.g. if you create cellulose acetate, the modification would be C2H3O2.
 
+### Output
+Results are output to the terminal and to the file named in the command line as a text file.
+
 ## Support
 If there are issues, contact @u0092172
 
