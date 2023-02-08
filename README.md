@@ -4,7 +4,7 @@
 EADScalc is a python script that can be used to determine the degree of substitution (DS) of modified cellulose (nanomaterials) using organic elemental analysis results, inlcuding correction for water content of the typically hygroscopic cellulose samples.
 
 ## Installation
-Requires lmfit and numoy. In windows, install the free anaconda python 3 distribution. Then install lmfit using pip:
+Requires lmfit and numpy. In windows, install the free anaconda python 3 distribution. Then install lmfit using pip:
 
 `python -m pip install lmfit`
 
