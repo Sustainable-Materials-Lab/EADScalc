@@ -17,8 +17,8 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "numpy<2.0.0",
-    "lmfit",
+    "numpy",
+    "lmfit>1.2.0",
 ]
 
 [project.urls]
