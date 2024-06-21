@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "EADScalc"
+version = "1.0"
+authors = [
+  { name="Samuel Eyley", email="samuel.eyley@kuleuven.be" },
+]
+description = "Scripts for calculating the DS of modified cellulose from elemental analysis results"
+readme = "README.md"
+requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "numpy<2.0.0",
+    "lmfit",
+]
+
+[project.urls]
+Homepage = "https://gitlab.kuleuven.be/susmat/cellulose/eadscalc"
+Issues = "https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/-/issues"
+
+[project.scripts]
+EADScalc = "EADScalc:cli"
