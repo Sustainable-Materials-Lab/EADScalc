@@ -1,1 +1,3 @@
 .conda/
+build/
+src/EADScalc.egg-info
