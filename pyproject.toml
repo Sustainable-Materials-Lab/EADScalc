@@ -19,6 +19,7 @@ classifiers = [
 dependencies = [
     "numpy",
     "lmfit>1.2.0",
+    "click"
 ]
 
 [project.urls]

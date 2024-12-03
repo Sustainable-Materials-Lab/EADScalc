@@ -107,10 +107,10 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 def cli(humidity,carb,hydr,nitr,sulf,nmod,oxyg,sili,fluo,
         chlor,brom,iodi,iron,copp,sodium,varywater,oxywater,
-        chain_ratio,C1,H1,O1,N1,S1,Si1,F1,Cl1,Br1,I1,Fe1,Cu1,Na1,
-        C2,H2,O2,N2,S2,Si2,F2,Cl2,Br2,I2,Fe2,Cu2,Na2,
-        C3,H3,O3,N3,S3,Si3,F3,Cl3,Br3,I3,Fe3,Cu3,Na3,
-        G1,G1min,G1max,G2,G2min,G2max,G3,G3min,G3max,watermax,
+        chain_ratio,c1,h1,o1,n1,s1,si1,f1,cl1,br1,i1,fe1,cu1,na1,
+        c2,h2,o2,n2,s2,si2,f2,cl2,br2,i2,fe2,cu2,na2,
+        c3,h3,o3,n3,s3,si3,f3,cl3,br3,i3,fe3,cu3,na3,
+        g1,g1min,g1max,g2,g2min,g2max,g3,g3min,g3max,watermax,
         cweight,hweight,nweight,sweight,oweight,method):
     """This script will calculate the DS for modified cellulose samples based on (CHNS)
      elemental analysis data. Type help to see a list of required and optional arguments.
@@ -133,7 +133,7 @@ def cli(humidity,carb,hydr,nitr,sulf,nmod,oxyg,sili,fluo,
     Cu_det = copp / 100
     Na_det = sodium / 100
 
-    """Atomic masses"""
+    # Atomic masses
     Cmass = float(12.011)
     Hmass = float(1.008)
     Omass = float(15.999)
@@ -148,38 +148,38 @@ def cli(humidity,carb,hydr,nitr,sulf,nmod,oxyg,sili,fluo,
     Cumass = float(63.546)
     Namass = float(22.98976928)
 
-    """Define cellulose"""
+    # Define cellulose
 
     c_cel = float(6)
     o_cel = float(5)
     h_cel = float(10)
 
 
-    """Define residual funtion to minimize"""
+    # Define residual funtion to minimize
     def residual (pars):
         parvals = pars.valuesdict()
         DS1 = parvals['DS1']
         DS2 = parvals['DS2']
         DS3 = parvals['DS3']
 
-        H_mod = h_cel - DS1 - DS2 - DS3 + (DS1*H1) + (DS2*H2) + (DS3*H3)
-        O_mod = o_cel - DS1 - DS2 - DS3 + (DS1*O1) + (DS2*O2) + (DS3*O3)
+        H_mod = h_cel - DS1 - DS2 - DS3 + (DS1*h1) + (DS2*h2) + (DS3*h3)
+        O_mod = o_cel - DS1 - DS2 - DS3 + (DS1*o1) + (DS2*o2) + (DS3*o3)
         
-        C_mod = c_cel + (DS1*C1) + (DS2*C2) + (DS3*C3)
-        N_mod = (DS1*N1) + (DS2*N2) + (DS3*N3)
-        S_mod = (DS1*S1) + (DS2*S2) + (DS3*S3)
-        Si_mod = (DS1*Si1) + (DS2*Si2) + (DS3*Si3)
-        Cl_mod = (DS1*Cl1) + (DS2*Cl2) + (DS3*Cl3)
-        Br_mod = (DS1*Br1) + (DS2*Br2) + (DS3*Br3)
-        F_mod = (DS1*F1) + (DS2*F2) + (DS3*F3)
-        I_mod = (DS1*I1) + (DS2*I2) + (DS3*I3)
-        Fe_mod = (DS1*Fe1) + (DS2*Fe2) + (DS3*Fe3)
-        Cu_mod = (DS1*Cu1) + (DS2*Cu2) + (DS3*Cu3)
-        Na_mod =  (DS1*Na1) + (DS2*Na2) + (DS3*Na3)
+        C_mod = c_cel + (DS1*c1) + (DS2*c2) + (DS3*c3)
+        N_mod = (DS1*n1) + (DS2*n2) + (DS3*n3)
+        S_mod = (DS1*s1) + (DS2*s2) + (DS3*s3)
+        Si_mod = (DS1*si1) + (DS2*si2) + (DS3*si3)
+        Cl_mod = (DS1*cl1) + (DS2*cl2) + (DS3*cl3)
+        Br_mod = (DS1*br1) + (DS2*br2) + (DS3*br3)
+        F_mod = (DS1*f1) + (DS2*f2) + (DS3*f3)
+        I_mod = (DS1*i1) + (DS2*i2) + (DS3*i3)
+        Fe_mod = (DS1*fe1) + (DS2*fe2) + (DS3*fe3)
+        Cu_mod = (DS1*cu1) + (DS2*cu2) + (DS3*cu3)
+        Na_mod =  (DS1*na1) + (DS2*na2) + (DS3*na3)
         
         
         
-        """Time to get massive"""
+        # Time to get massive
         
         C_tot = C_mod * Cmass
         H_tot = H_mod * Hmass
@@ -223,7 +223,7 @@ def cli(humidity,carb,hydr,nitr,sulf,nmod,oxyg,sili,fluo,
         Cu_frac = (Cu_tot / M_tot)*(1-water_frac)
         Na_frac = (Na_tot / M_tot)*(1-water_frac)
         
-        """Life gets complicated!"""
+        # Life gets complicated!
     
         if np.allclose(C_det,0) == False:
             residC = ((C_det-C_frac))**2
@@ -282,20 +282,20 @@ def cli(humidity,carb,hydr,nitr,sulf,nmod,oxyg,sili,fluo,
                         1*residCu,1*residNa))
 
 
-    """Create model from residual and parameterize"""
+    # Create model from residual and parameterize
     model1 = lmf.Model(residual)
     if nmod == 1:
-        model1.set_param_hint('DS1',value=G1,min=G1min,max=G1max)
+        model1.set_param_hint('DS1',value=g1,min=g1min,max=g1max)
         model1.set_param_hint('DS2',value=0,vary=False)
         model1.set_param_hint('DS3',value=0,vary=False)
     elif nmod == 2:
-        model1.set_param_hint('DS1',value=G1,min=G1min,max=G1max)
-        model1.set_param_hint('DS2',value=G2,min=G2min,max=G2max)
+        model1.set_param_hint('DS1',value=g1,min=g1min,max=g1max)
+        model1.set_param_hint('DS2',value=g2,min=g2min,max=g2max)
         model1.set_param_hint('DS3',value=0,vary=False)
     else:
-        model1.set_param_hint('DS1',value=G1,min=G1min,max=G1max)
-        model1.set_param_hint('DS2',value=G2,min=G2min,max=G2max)
-        model1.set_param_hint('DS3',value=G3,min=G3min,max=G3max)
+        model1.set_param_hint('DS1',value=g1,min=g1min,max=g1max)
+        model1.set_param_hint('DS2',value=g2,min=g2min,max=g2max)
+        model1.set_param_hint('DS3',value=g3,min=g3min,max=g3max)
     if varywater == True:
         model1.set_param_hint('water',value=humidity/100,min=max(0,(humidity-0.5)/100),
                             max=max((humidity+2)/100,watermax/100))
@@ -303,30 +303,30 @@ def cli(humidity,carb,hydr,nitr,sulf,nmod,oxyg,sili,fluo,
         model1.set_param_hint('water',value=humidity/100,vary=False)
     pars = model1.make_params()
 
-    """Here's the magic line. leastsq is LM algorithm, others are available."""
+    # Here's the magic line. leastsq is LM algorithm, others are available.
     result = lmf.minimize(residual,pars,method=method)
 
-    """Format results"""
+    # Format results
     report = lmf.fit_report(result)
     DS = list(result.params.valuesdict().values())
 
-    H_mod = h_cel - DS[0] - DS[1] - DS[2] + (DS[0]*H1) + (DS[1]*H2) + (DS[2]*H3)
-    O_mod = o_cel - DS[0] - DS[1] - DS[2] + (DS[0]*O1) + (DS[1]*O2) + (DS[2]*O3)
+    H_mod = h_cel - DS[0] - DS[1] - DS[2] + (DS[0]*h1) + (DS[1]*h2) + (DS[2]*h3)
+    O_mod = o_cel - DS[0] - DS[1] - DS[2] + (DS[0]*o1) + (DS[1]*o2) + (DS[2]*o3)
 
-    C_mod = c_cel + (DS[0]*C1) + (DS[1]*C2) + (DS[2]*C3)
-    N_mod = (DS[0]*N1) + (DS[1]*N2) + (DS[2]*N3)
-    S_mod = (DS[0]*S1) + (DS[1]*S2) + (DS[2]*S3)
-    Si_mod = (DS[0]*Si1) + (DS[1]*Si2) + (DS[2]*Si3)
-    Cl_mod = (DS[0]*Cl1) + (DS[1]*Cl2) + (DS[2]*Cl3)
-    Br_mod = (DS[0]*Br1) + (DS[1]*Br2) + (DS[2]*Br3)
-    F_mod = (DS[0]*F1) + (DS[1]*F2) + (DS[2]*F3)
-    I_mod = (DS[0]*I1) + (DS[1]*I2) + (DS[2]*I3)
+    C_mod = c_cel + (DS[0]*c1) + (DS[1]*c2) + (DS[2]*c3)
+    N_mod = (DS[0]*n1) + (DS[1]*n2) + (DS[2]*n3)
+    S_mod = (DS[0]*s1) + (DS[1]*s2) + (DS[2]*s3)
+    Si_mod = (DS[0]*si1) + (DS[1]*si2) + (DS[2]*si3)
+    Cl_mod = (DS[0]*cl1) + (DS[1]*cl2) + (DS[2]*cl3)
+    Br_mod = (DS[0]*br1) + (DS[1]*br2) + (DS[2]*br3)
+    F_mod = (DS[0]*f1) + (DS[1]*f2) + (DS[2]*f3)
+    I_mod = (DS[0]*i1) + (DS[1]*i2) + (DS[2]*i3)
 
-    Fe_mod = (DS[0]*Fe1) + (DS[1]*Fe2) + (DS[2]*Fe3)
-    Cu_mod = (DS[0]*Cu1) + (DS[1]*Cu2) + (DS[2]*Cu3)
-    Na_mod = (DS[0]*Na1) + (DS[1]*Na2) + (DS[2]*Na3)   
+    Fe_mod = (DS[0]*fe1) + (DS[1]*fe2) + (DS[2]*fe3)
+    Cu_mod = (DS[0]*cu1) + (DS[1]*cu2) + (DS[2]*cu3)
+    Na_mod = (DS[0]*na1) + (DS[1]*na2) + (DS[2]*na3)   
 
-    """Time to get massive"""
+    # Time to get massive
 
     C_tot = C_mod * Cmass
     H_tot = H_mod * Hmass
@@ -369,11 +369,11 @@ def cli(humidity,carb,hydr,nitr,sulf,nmod,oxyg,sili,fluo,
     Cu_frac = (Cu_tot / M_tot)*(1-water_frac)
     Na_frac = (Na_tot / M_tot)*(1-water_frac) 
 
-    """Extra for calc of mass percent mod"""
+    # Extra for calc of mass percent mod
 
-    H_mod1 = (DS[0]*H1) + (DS[1]*H2) + (DS[2]*H3)
-    O_mod1 = (DS[0]*O1) + (DS[1]*O2) + (DS[2]*O3)
-    C_mod1 = (DS[0]*C1) + (DS[1]*C2) + (DS[2]*C3)
+    H_mod1 = (DS[0]*h1) + (DS[1]*h2) + (DS[2]*h3)
+    O_mod1 = (DS[0]*o1) + (DS[1]*o2) + (DS[2]*o3)
+    C_mod1 = (DS[0]*c1) + (DS[1]*c2) + (DS[2]*c3)
 
     C_tot1 = C_mod1 * Cmass
     H_tot1 = H_mod1 * Hmass
@@ -387,9 +387,9 @@ def cli(humidity,carb,hydr,nitr,sulf,nmod,oxyg,sili,fluo,
         +' S'+str(round(S_mod,3))+' F'+str(round(F_mod,3))+' Cl'+str(round(Cl_mod,3))+' Br'+str(round(Br_mod,3))+' I'+str(round(I_mod,3))
         +' Fe'+str(round(Fe_mod,3))+' Cu'+str(round(Cu_mod,3))+' Na'+str(round(Na_mod,3))+os.linesep
         +'Chain ratio: '+str(chain_ratio)+os.linesep
-        +'Mod 1: C'+str(round(C1,3))+' H'+str(round(H1,3))+' O'+str(round(O1,3))+' N'+str(round(N1,3))+' S'+str(round(S1,3))+' Si'+str(round(Si1,3))+' F'+str(round(F1,3))+' Cl'+str(round(Cl1,3))+' Br'+str(round(Br1,3))+' I'+str(round(I1,3))+' Fe'+str(round(Fe1,3))+' Cu'+str(round(Cu1,3))+' Na'+str(round(Na1,3))+os.linesep
-        +'Mod 2: C'+str(round(C2,3))+' H'+str(round(H2,3))+' O'+str(round(O2,3))+' N'+str(round(N2,3))+' S'+str(round(S2,3))+' Si'+str(round(Si2,3))+' F'+str(round(F2,3))+' Cl'+str(round(Cl2,3))+' Br'+str(round(Br2,3))+' I'+str(round(I2,3))+' Fe'+str(round(Fe2,3))+' Cu'+str(round(Cu2,3))+' Na'+str(round(Na2,3))+os.linesep
-        +'Mod 3: C'+str(round(C3,3))+' H'+str(round(H3,3))+' O'+str(round(O3,3))+' N'+str(round(N3,3))+' S'+str(round(S3,3))+' Si'+str(round(Si3,3))+' F'+str(round(F3,3))+' Cl'+str(round(Cl3,3))+' Br'+str(round(Br3,3))+' I'+str(round(I3,3))+' Fe'+str(round(Fe3,3))+' Cu'+str(round(Cu3,3))+' Na'+str(round(Na3,3))+os.linesep
+        +'Mod 1: C'+str(round(c1,3))+' H'+str(round(h1,3))+' O'+str(round(o1,3))+' N'+str(round(n1,3))+' S'+str(round(s1,3))+' Si'+str(round(si1,3))+' F'+str(round(f1,3))+' Cl'+str(round(cl1,3))+' Br'+str(round(br1,3))+' I'+str(round(i1,3))+' Fe'+str(round(fe1,3))+' Cu'+str(round(cu1,3))+' Na'+str(round(na1,3))+os.linesep
+        +'Mod 2: C'+str(round(c2,3))+' H'+str(round(h2,3))+' O'+str(round(o2,3))+' N'+str(round(n2,3))+' S'+str(round(s2,3))+' Si'+str(round(si2,3))+' F'+str(round(f2,3))+' Cl'+str(round(cl2,3))+' Br'+str(round(br2,3))+' I'+str(round(i2,3))+' Fe'+str(round(fe2,3))+' Cu'+str(round(cu2,3))+' Na'+str(round(na2,3))+os.linesep
+        +'Mod 3: C'+str(round(c3,3))+' H'+str(round(h3,3))+' O'+str(round(o3,3))+' N'+str(round(n3,3))+' S'+str(round(s3,3))+' Si'+str(round(si3,3))+' F'+str(round(f3,3))+' Cl'+str(round(cl3,3))+' Br'+str(round(br3,3))+' I'+str(round(i3,3))+' Fe'+str(round(fe3,3))+' Cu'+str(round(cu3,3))+' Na'+str(round(na3,3))+os.linesep
         +'DS1 = '+str(round(DS[0],3))+os.linesep
         +'DS2 = '+str(round(DS[1],3))+os.linesep
         +'DS3 = '+str(round(DS[2],3))+os.linesep
