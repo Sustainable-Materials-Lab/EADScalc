@@ -1,5 +1,9 @@
-release_job:
-  stage: release
+stages:
+  - release
+  - build
+  - publish
+
+stage: release
   image: registry.gitlab.com/gitlab-org/release-cli:latest
   rules:
     - if: $CI_COMMIT_TAG                 # Run this job when a tag is created
@@ -9,35 +13,31 @@ release_job:
     tag_name: '$CI_COMMIT_TAG'
     description: '$CI_COMMIT_TAG'
 
-packaging_job:
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.pip-cache"
+
+cache:
+  paths:
+    - .pip-cache/
+
+before_script:
+  - python --version
+  - pip install --upgrade pip
+  - pip install build twine
+
+build:
+  stage: build
   image: python:3.13
-  stages:
-    - build
-    - publish
-
-  variables:
-    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.pip-cache"
-
-  cache:
+  script:
+    - python -m build
+  artifacts:
     paths:
-      - .pip-cache/
+      - dist/
 
-  before_script:
-    - python --version
-    - pip install --upgrade pip
-    - pip install build twine
-
-  build:
-    stage: build
-    script:
-      - python -m build
-    artifacts:
-      paths:
-        - dist/
-
-  publish:
-    stage: publish
-    script:
-      - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi dist/*
-    rules:
-      - if: $CI_COMMIT_TAG
+publish:
+  stage: publish
+  image: python:3.13
+  script:
+    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi dist/*
+  rules:
+    - if: $CI_COMMIT_TAG
