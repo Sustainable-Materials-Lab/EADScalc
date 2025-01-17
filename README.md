@@ -4,7 +4,8 @@
 EADScalc is a python script that can be used to determine the degree of substitution (DS) of modified cellulose (nanomaterials) using organic elemental analysis results, inlcuding correction for water content of the typically hygroscopic cellulose samples.
 
 ## Installation
-`python -m pip install .`
+Use a python virtual environment and install via
+`pip install EADScalc --extra-index-url https://gitlab.kuleuven.be/api/v4/projects/9529/packages/pypi/simple`
 
 ## Usage
 To get help with the script, run:
