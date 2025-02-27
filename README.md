@@ -14,11 +14,13 @@ To get help with the script, run:
 
 The minimal amount of information you need to enter to run the calculation is:
 
-`EADScalc <chain_ratio> <water_content> <carbon_content> <hydrogen_content> <nitrogen_content> <sulfur_content> <result_filename_without_ext> --nmod <number_of_modificationsf_(1)> --C1 <number_C_first_mod> --O1 <number_O_first_mod> --S1 <number_S_first_mod> --H1 <number_H_first_mod> (--C2...)`
+`EADScalc <carbon_content> <hydrogen_content> <nitrogen_content> --nmod <number_of_modifications> --O1 <number_O_first_mod> --H1 <number_H_first_mod>`
 
-For example:
+However, the water content of the sample (humidity) and likely the sulfur content will be needed in most calculations.
 
-`EADScalc 1 3.0 41 6 0 0.5 'sulfate' --nmod 1 --C1 0 --01 4 --S1 1 --H1 1`
+For example (sulfate):
+
+`EADScalc 41 6 0 --humidity 5 --sulfur 0.5 --nmod 1 --01 4 --S1 1 --H1 1`
 
 When considering the empirical formula of the modification, consider all atoms that REPLACE the hydroxyl group that you are modifying. E.g. if you create cellulose acetate, the modification would be C2H3O2.
 
