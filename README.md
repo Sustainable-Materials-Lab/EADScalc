@@ -33,11 +33,23 @@ If there are issues, contact @u0092172
 ## Roadmap
 No updates are planned for this project and it is in a dormant state.
 
+## Recent Updates
+**2025**: Major code refactoring completed
+- Reduced code duplication by consolidating repetitive patterns into data-driven structures
+- Implemented decorator factories for dynamic Click option generation
+- Replaced 39+ manual option decorators with 2 reusable functions
+- Consolidated 13+ atomic mass variables into a single dictionary
+- Refactored residual calculation from 13 if-blocks to a single loop
+- Improved code maintainability while maintaining full backward compatibility
+- All command-line arguments and outputs remain identical
+
 ## Contributing
 Contributors are welcome.
 
 ## Authors and acknowledgment
-Originally authored by @u0092172
+Originally authored by @u0092172 (Sam Eyley). 
+
+Code refactored with the help of GitHub Copilot.
 
 ## License
 MIT License
