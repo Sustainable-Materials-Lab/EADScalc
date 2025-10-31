@@ -10,7 +10,7 @@ Modules:
     XPSDScalc: Calculate DS from XPS atomic concentration data
 """
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __author__ = "Sam Eyley"
 
 # Import main CLI functions for convenience
