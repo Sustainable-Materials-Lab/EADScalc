@@ -301,11 +301,20 @@ def cli(**kwargs):
         else:
             calculated_fractions[elem] = (element_masses[elem] / total_mass) * (1 - water_frac)
     
-    # Calculate mass fraction of modification
+    # Calculate mass fraction of modification (total)
     mod_masses = {elem: sum(DS[i] * modifications[i][elem] for i in range(3)) * ATOMIC_MASSES[elem]
                   for elem in MOD_ELEMENTS}
     total_mod_mass = sum(mod_masses.values())
     frac_mod = total_mod_mass / total_mass
+    
+    # Calculate mass fraction of each modification separately
+    frac_mod_individual = []
+    for i in range(3):
+        mod_masses_i = {elem: DS[i] * modifications[i][elem] * ATOMIC_MASSES[elem]
+                       for elem in MOD_ELEMENTS}
+        total_mod_mass_i = sum(mod_masses_i.values())
+        frac_mod_i = total_mod_mass_i / total_mass
+        frac_mod_individual.append(frac_mod_i)
     
     # Build empirical formula string
     formula_parts = []
@@ -347,7 +356,10 @@ def cli(**kwargs):
         f'Found percent water = {humidity}' + os.linesep +
         f'Found percent water (oxygen) = {oxywater}' + os.linesep +
         f'Calc percent water = {water_result*100}' + os.linesep +
-        f'Mass fraction modification = {round(frac_mod, 3)}' + os.linesep +
+        f'Mass fraction modification (total) = {round(frac_mod, 3)}' + os.linesep +
+        f'Mass fraction modification 1 = {round(frac_mod_individual[0], 3)}' + os.linesep +
+        f'Mass fraction modification 2 = {round(frac_mod_individual[1], 3)}' + os.linesep +
+        f'Mass fraction modification 3 = {round(frac_mod_individual[2], 3)}' + os.linesep +
         f'Molecular mass modified AGU = {round(total_mass, 5)}' + os.linesep +
         'Found: ' + os.linesep +
         '; '.join(found_parts) + os.linesep +

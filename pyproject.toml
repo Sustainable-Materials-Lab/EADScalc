@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+requires = ["uv_build>=0.9.6,<0.10.0"]
+build-backend = "uv_build"
 
 [project]
 name = "EADScalc"
@@ -27,4 +27,7 @@ Homepage = "https://gitlab.kuleuven.be/susmat/cellulose/eadscalc"
 Issues = "https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/-/issues"
 
 [project.scripts]
-EADScalc = "EADScalc:cli"
+EADScalc = "eadscalc.EADScalc:cli"
+
+[tool.uv.build-backend]
+module-name = "eadscalc"
