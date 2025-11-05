@@ -17,7 +17,7 @@ plugins:
           to: 'version = "${nextRelease.version}"'
           countMatches: true
         - files:
-            - src/__init__.py
+            - src/eadscalc/__init__.py
           from:
             - ^__version__ *= *["\'][\d\.]+["\']
           to: '__version__ = "${nextRelease.version}"'
