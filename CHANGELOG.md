@@ -1,3 +1,10 @@
+## [1.2.1](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/compare/v1.2.0...v1.2.1) (2025-11-12)
+
+
+### Bug Fixes
+
+* enable security testing ([f3c7bf1](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/commit/f3c7bf1ff5c7aa9b4cab6a0d8e39e0f1376916f0))
+
 # [1.2.0](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/compare/v1.1.0...v1.2.0) (2025-11-05)
 
 
