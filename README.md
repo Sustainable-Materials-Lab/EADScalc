@@ -5,7 +5,7 @@ EADScalc is a python script that can be used to determine the degree of substitu
 
 ## Installation
 Use a python virtual environment and install via
-`pip install EADScalc
+`pip install EADScalc`
 
 ## Usage
 To get help with the script, run:
