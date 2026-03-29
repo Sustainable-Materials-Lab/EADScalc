@@ -1,3 +1,10 @@
+## [1.2.4](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/compare/v1.2.3...v1.2.4) (2026-03-29)
+
+
+### Bug Fixes
+
+* update project location in pyproject.toml for pypi ([cfa300b](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/commit/cfa300b19027695193245b607f045bc523d05621))
+
 ## [1.2.3](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/compare/v1.2.2...v1.2.3) (2026-03-29)
 
 
