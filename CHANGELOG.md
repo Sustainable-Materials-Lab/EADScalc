@@ -1,3 +1,10 @@
+## [1.2.3](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/compare/v1.2.2...v1.2.3) (2026-03-29)
+
+
+### Bug Fixes
+
+* remove out-dated information from readme ([21d2bf1](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/commit/21d2bf194ef9fa050a5186286a3d945502f9b87d))
+
 ## [1.2.2](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/compare/v1.2.1...v1.2.2) (2026-03-29)
 
 
