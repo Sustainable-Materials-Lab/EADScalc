@@ -1,3 +1,10 @@
+## [1.2.2](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/compare/v1.2.1...v1.2.2) (2026-03-29)
+
+
+### Bug Fixes
+
+* add github actions for PyPI release ([c491ebc](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/commit/c491ebc219bea448c0af53df2d3b4f14a4ad7183))
+
 ## [1.2.1](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/compare/v1.2.0...v1.2.1) (2025-11-12)
 
 
