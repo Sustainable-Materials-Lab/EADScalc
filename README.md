@@ -5,7 +5,7 @@ EADScalc is a python script that can be used to determine the degree of substitu
 
 ## Installation
 Use a python virtual environment and install via
-`pip install EADScalc --extra-index-url https://gitlab.kuleuven.be/api/v4/projects/9529/packages/pypi/simple`
+`pip install EADScalc
 
 ## Usage
 To get help with the script, run:
@@ -28,7 +28,7 @@ When considering the empirical formula of the modification, consider all atoms t
 Results are output to the terminal and to the file named in the command line as a text file.
 
 ## Support
-If there are issues, contact @u0092172
+If there are issues, report via https://github.com/Sustainable-Materials-Lab/EADScalc/issues
 
 ## Roadmap
 No updates are planned for this project and it is in a dormant state.
@@ -47,7 +47,7 @@ No updates are planned for this project and it is in a dormant state.
 Contributors are welcome.
 
 ## Authors and acknowledgment
-Originally authored by @u0092172 (Sam Eyley). 
+Originally authored by Samuel Eyley. 
 
 Code refactored with the help of GitHub Copilot.
 
