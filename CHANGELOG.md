@@ -1,3 +1,10 @@
+## [1.2.5](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/compare/v1.2.4...v1.2.5) (2026-03-29)
+
+
+### Bug Fixes
+
+* add updated contact details ([2f3ee3a](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/commit/2f3ee3a1cb1b1d1d74c85eb2b24dfe121f85d85f))
+
 ## [1.2.4](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/compare/v1.2.3...v1.2.4) (2026-03-29)
 
 

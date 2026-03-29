@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "EADScalc"
-version = "1.2.4"
+version = "1.2.5"
 authors = [
   { name="Samuel Eyley", email="eadscalcpypi.epasf@simplelogin.com" },
 ]
