@@ -4,3 +4,4 @@ src/EADScalc.egg-info
 src/result.txt
 result.txt
 .venv/
+src/eadscalc/__pycache__/

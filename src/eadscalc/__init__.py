@@ -15,6 +15,5 @@ __author__ = "Sam Eyley"
 
 # Import main CLI functions for convenience
 from .EADScalc import cli as eads_cli
-from .XPSDScalc import *
 
 __all__ = ['eads_cli']
