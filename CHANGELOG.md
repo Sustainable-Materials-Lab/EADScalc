@@ -1,3 +1,11 @@
+## [1.2.6](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/compare/v1.2.5...v1.2.6) (2026-08-25)
+
+
+### Bug Fixes
+
+* disable semgrep and fix asteval dependency ([20f8e49](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/commit/20f8e4916eb16ac0b34e41ff921b51ddbfeebe9e))
+* prevent accidental import of XPS calculator ([3b33566](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/commit/3b33566844299f299091c9d5280c18e47777eabf))
+
 ## [1.2.5](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/compare/v1.2.4...v1.2.5) (2026-03-29)
 
 
