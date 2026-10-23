@@ -5,3 +5,4 @@ src/result.txt
 result.txt
 .venv/
 src/eadscalc/__pycache__/
+.cache/
