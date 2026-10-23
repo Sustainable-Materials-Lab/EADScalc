@@ -1,3 +1,11 @@
+## [1.2.7](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/compare/v1.2.6...v1.2.7) (2026-10-23)
+
+
+### Bug Fixes
+
+* update license definitiion ([5612269](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/commit/5612269ad2d27c28ef5ac1072f521e6c2ad805f9))
+* use python 3.15 ([c355d05](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/commit/c355d05b8e639b132c15012d02e486d4f3b60532))
+
 ## [1.2.6](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/compare/v1.2.5...v1.2.6) (2026-08-25)
 
 
