@@ -2,15 +2,12 @@
 include:
   # Python template
   - component: "$CI_SERVER_FQDN/to-be-continuous/python/gitlab-ci-python@9.6.2"
-    # rules:
-    #   - if: $CI_COMMIT_TAG
     inputs:
       image: docker.io/library/python:3.15
       package-enabled: true
       publish-enabled: true
       trivy-disabled: false
       sbom-disabled: true
-      semgrep-disabled: false
       build-system: "uv"
   # semantic-release template
   - component: "$CI_SERVER_FQDN/to-be-continuous/semantic-release/gitlab-ci-semrel@4.3.0"
@@ -20,18 +17,10 @@ include:
       commit-spec: conventionalcommits
 
 semantic-release:
-  before_script:
-    - !reference [.semrel-base, before_script]
-    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
-    - |
-      if [ -f "$SEMREL_DEPLOY_KEY" ]; then
-        cp "$SEMREL_DEPLOY_KEY" ~/.ssh/semrel_deploy_key
-      else
-        printf '%s\n' "$SEMREL_DEPLOY_KEY" | tr -d '\r' > ~/.ssh/semrel_deploy_key
-      fi
-    - chmod 600 ~/.ssh/semrel_deploy_key
-    - eval "$(ssh-agent -s)"
-    - ssh-add ~/.ssh/semrel_deploy_key
-    - ssh-keyscan -H "$CI_SERVER_HOST" >> ~/.ssh/known_hosts
-    - chmod 644 ~/.ssh/known_hosts
-    - git remote set-url origin "git@${CI_SERVER_HOST}:${CI_PROJECT_PATH}.git"
+  variables:
+    GITLAB_TOKEN: "$SUSMAT_RELEASE_TOKEN"
+
+py-release:
+  variables:
+    GIT_PASSWORD: "$SUSMAT_RELEASE_TOKEN"
+    GITLAB_USER_NAME: "$SUSMAT_RELEASE_USER"
