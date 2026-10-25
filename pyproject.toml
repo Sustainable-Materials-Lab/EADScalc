@@ -19,9 +19,8 @@ license = "MIT"
 license-files = ["LICENSE"]
 dependencies = [
     "numpy",
-    "lmfit>1.2.0",
+    "scipy",
     "click",
-    "asteval>=1.0.9",
 ]
 
 [project.urls]
