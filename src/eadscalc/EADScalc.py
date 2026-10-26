@@ -15,8 +15,9 @@ Refactored version with reduced code repetition.
 import click
 import os
 import sys
-import lmfit as lmf
 import numpy as np
+
+from ._fit import METHODS, Param, minimize
 
 # ============================================================================
 # Constants and Configuration
@@ -128,7 +129,7 @@ def add_guess_options(num_mods=3):
 @click.option("--nweight", help="Nitrogen weighting during minimization", type=click.FLOAT, default=float(1e6))
 @click.option("--sweight", help="Sulfur weighting during minimization", type=click.FLOAT, default=float(1e6))
 @click.option("--oweight", help="Oxygen weighting during minimization", type=click.FLOAT, default=float(1e5))
-@click.option("--method", help="Minimization routine (nelder or leastsq recommended) see lmfit documentation", default="nelder")
+@click.option("--method", help="Minimization routine (scipy least_squares: trf or dogbox)", type=click.Choice(METHODS), default="trf")
 def cli(**kwargs):
     """This script will calculate the DS for modified cellulose samples based on (CHNS)
      elemental analysis data. Type help to see a list of required and optional arguments.
@@ -173,10 +174,9 @@ def cli(**kwargs):
     # Define Residual Function
     # ========================================================================
     
-    def residual(pars):
-        """Calculate residuals between detected and calculated elemental fractions"""
-        parvals = pars.valuesdict()
-        DS = [parvals['DS1'], parvals['DS2'], parvals['DS3']]
+    def residual(parvals):
+        """Calculate weighted residuals between detected and calculated elemental fractions"""
+        DS =  [parvals['DS1'], parvals['DS2'], parvals['DS3']]
         
         # Calculate modified composition for each element
         composition = {}
@@ -220,9 +220,9 @@ def cli(**kwargs):
             
             # Calculate residual if element was detected (not close to 0)
             if not np.allclose(detected[elem], 0):
-                resid = ((detected[elem] - frac) ** 2) * weights[elem]
+                resid = (detected[elem] - frac) * np.sqrt(weights[elem])
             else:
-                resid = 0
+                resid = 0.0
             
             residuals.append(resid)
         
@@ -232,43 +232,31 @@ def cli(**kwargs):
     # Setup and Run Optimization
     # ========================================================================
     
-    # Create model from residual and parameterize
-    model1 = lmf.Model(residual)
-    
     # Set DS parameters based on number of modifications
-    if nmod == 1:
-        model1.set_param_hint('DS1', value=kwargs['g1'], min=kwargs['g1min'], max=kwargs['g1max'])
-        model1.set_param_hint('DS2', value=0, vary=False)
-        model1.set_param_hint('DS3', value=0, vary=False)
-    elif nmod == 2:
-        model1.set_param_hint('DS1', value=kwargs['g1'], min=kwargs['g1min'], max=kwargs['g1max'])
-        model1.set_param_hint('DS2', value=kwargs['g2'], min=kwargs['g2min'], max=kwargs['g2max'])
-        model1.set_param_hint('DS3', value=0, vary=False)
-    else:
-        model1.set_param_hint('DS1', value=kwargs['g1'], min=kwargs['g1min'], max=kwargs['g1max'])
-        model1.set_param_hint('DS2', value=kwargs['g2'], min=kwargs['g2min'], max=kwargs['g2max'])
-        model1.set_param_hint('DS3', value=kwargs['g3'], min=kwargs['g3min'], max=kwargs['g3max'])
+    params = {}
+    for i in range(1, 4):
+        if i <= nmod:
+            params[f'DS{i}'] = Param(kwargs[f'g{i}'], min=kwargs[f'g{i}min'], max=kwargs[f'g{i}max'])
+        else:
+            params[f'DS{i}'] = Param(0, vary=False)
     
     # Set water parameter
     if varywater:
-        model1.set_param_hint('water', value=humidity/100, 
-                            min=max(0, (humidity-0.5)/100),
-                            max=max((humidity+2)/100, watermax/100))
+        params['water'] = Param(humidity/100,
+                                min=max(0, (humidity-0.5)/100),
+                                max=max((humidity+2)/100, watermax/100))
     else:
-        model1.set_param_hint('water', value=humidity/100, vary=False)
-    
-    pars = model1.make_params()
+        params['water'] = Param(humidity/100, vary=False)
     
     # Run minimization
-    result = lmf.minimize(residual, pars, method=method)
+    values, report = minimize(residual, params, method=method)
     
     # ========================================================================
     # Format and Output Results
     # ========================================================================
     
-    report = lmf.fit_report(result)
-    DS = [result.params['DS1'].value, result.params['DS2'].value, result.params['DS3'].value]
-    water_result = result.params['water'].value
+    DS = [values['DS1'], values['DS2'], values['DS3']]
+    water_result = values['water']
     
     # Calculate final composition
     final_composition = {}

@@ -25,8 +25,8 @@ Example commandline:
 import argparse as ap
 import os
 import sys
-import lmfit as lmf
 import numpy as np
+from eadscalc._fit import METHODS, Param, minimize
 
 parser = ap.ArgumentParser(description='DS calculator for cellulose from XPS')
 parser.add_argument("carb", help="Detected carbon percent",type=float)
@@ -108,7 +108,7 @@ parser.add_argument("--nweight",help="Nitrogen weighting during minimization",ty
 parser.add_argument("--sweight",help="Sulfur weighting during minimization",type=float,default=float(1))
 parser.add_argument("--oweight",help="Oxygen weighting during minimization",type=float,default=float(1))
 
-parser.add_argument("--method", help="Minimization routine (nelder or leastsq recommended) see lmfit documentation",type=str,default="nelder")
+parser.add_argument("--method", help="Minimization routine (scipy least_squares: trf or dogbox)",type=str,choices=METHODS,default="trf")
 
 args = parser.parse_args()
 
@@ -134,8 +134,7 @@ h_cel = float(10)
 
 
 """Define residual funtion to minimize"""
-def residual (pars):
-    parvals = pars.valuesdict()
+def residual (parvals):
     DS1 = parvals['DS1']
     DS2 = parvals['DS2']
     DS3 = parvals['DS3']
@@ -178,80 +177,70 @@ def residual (pars):
     """Life gets complicated!"""
  
     if np.allclose(C_det,0) == False:
-        residC = ((C_det-C_frac))**2
+        residC = C_det-C_frac
     else:
         residC = 0
     if np.allclose(O_det,0) == False:
-        residO = ((O_det-O_frac))**2
+        residO = O_det-O_frac
     else:
         residO = 0
     if np.allclose(N_det,0) == False:
-        residN = ((N_det-N_frac))**2
+        residN = N_det-N_frac
     else:
         residN = 0
     if np.allclose(S_det,0) == False:
-        residS = ((S_det-S_frac))**2
+        residS = S_det-S_frac
     else:
         residS = 0
     if np.allclose(Si_det,0) == False:
-        residSi = ((Si_det-Si_frac))**2
+        residSi = Si_det-Si_frac
     else:
         residSi = 0
     if np.allclose(Cl_det,0) == False:
-        residCl = ((Cl_det-Cl_frac))**2
+        residCl = Cl_det-Cl_frac
     else:
         residCl = 0
     if np.allclose(Br_det,0) == False:
-        residBr = ((Br_det-Br_frac))**2
+        residBr = Br_det-Br_frac
     else:
         residBr = 0
     if np.allclose(F_det,0) == False:
-        residF = ((F_det-F_frac))**2
+        residF = F_det-F_frac
     else:
         residF = 0
     if np.allclose(I_det,0) == False:
-        residI = ((I_det-I_frac))**2
+        residI = I_det-I_frac
     else: 
         residI = 0
     if np.allclose(Fe_det,0) == False:
-        residFe = ((Fe_det-Fe_frac))**2
+        residFe = Fe_det-Fe_frac
     else: 
         residFe = 0
     if np.allclose(Cu_det,0) == False:
-        residCu = ((Cu_det-Cu_frac))**2
+        residCu = Cu_det-Cu_frac
     else: 
         residCu = 0
     if np.allclose(Na_det,0) == False:
-        residNa = ((Na_det-Na_frac))**2
+        residNa = Na_det-Na_frac
     else: 
         residNa = 0     
-    return np.array((1*residC*args.cweight,1*residO*args.oweight,1e7*residN*args.nweight,
-                     1*residS*args.sweight,1*residSi,1e5*residCl,1e5*residBr,1*residF,1*residI,1*residFe,
-                     1*residCu,1*residNa))
+    return np.sqrt(np.array((1*args.cweight,1*args.oweight,1e7*args.nweight,
+                     1*args.sweight,1,1e5,1e5,1,1,1,
+                     1,1))) * np.array((residC,residO,residN,residS,residSi,residCl,residBr,
+                     residF,residI,residFe,residCu,residNa))
 
 
-"""Create model from residual and parameterize"""
-model1 = lmf.Model(residual)
-if args.nmod == 1:
-    model1.set_param_hint('DS1',value=args.G1,min=args.G1min,max=args.G1max)
-    model1.set_param_hint('DS2',value=0,vary=False)
-    model1.set_param_hint('DS3',value=0,vary=False)
-elif args.nmod == 2:
-    model1.set_param_hint('DS1',value=args.G1,min=args.G1min,max=args.G1max)
-    model1.set_param_hint('DS2',value=args.G2,min=args.G2min,max=args.G2max)
-    model1.set_param_hint('DS3',value=0,vary=False)
-else:
-    model1.set_param_hint('DS1',value=args.G1,min=args.G1min,max=args.G1max)
-    model1.set_param_hint('DS2',value=args.G2,min=args.G2min,max=args.G2max)
-    model1.set_param_hint('DS3',value=args.G3,min=args.G3min,max=args.G3max)
-pars = model1.make_params()
+"""Parameterize"""
+params = {}
+for i, (g, gmin, gmax) in enumerate([(args.G1,args.G1min,args.G1max),(args.G2,args.G2min,args.G2max),
+                                     (args.G3,args.G3min,args.G3max)], start=1):
+    params[f'DS{i}'] = Param(g,min=gmin,max=gmax) if i <= args.nmod else Param(0,vary=False)
 
-"""Here's the magic line. leastsq is LM algorithm, others are available."""
-result = lmf.minimize(residual,pars,method=args.method)
+"""Here's the magic line. trf/dogbox are scipy least_squares algorithms."""
+values, report = minimize(residual,params,method=args.method)
 
 """Format results"""
-report = lmf.fit_report(result)
-DS = list(result.params.valuesdict().values())
+DS = [values['DS1'],values['DS2'],values['DS3']]
 
 O_mod = o_cel - DS[0] - DS[1] - DS[2] + (DS[0]*args.O1) + (DS[1]*args.O2) + (DS[2]*args.O3)
 
