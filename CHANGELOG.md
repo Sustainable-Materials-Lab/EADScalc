@@ -1,3 +1,15 @@
+# [2.0.0](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/compare/v1.2.7...v2.0.0) (2026-10-26)
+
+
+### Features
+
+* **core:** switch to scipy ([37848ac](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/commit/37848ac60e44d138e999cd7f2e006e01fd1389aa))
+
+
+### BREAKING CHANGES
+
+* **core:** scipy instead of lmfit for minimization
+
 ## [1.2.7](https://gitlab.kuleuven.be/susmat/cellulose/eadscalc/compare/v1.2.6...v1.2.7) (2026-10-23)
 
 
